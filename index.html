@@ -1,20 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Warranty Check Links</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warranty Check - Swastik Mobile</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border-radius: 20px;
+      padding: 30px 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 25px;
+      color: #ffb347;
+      animation: slideIn 0.8s ease;
+    }
+
+    .brand-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .brand-list a {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .brand-list a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, #ff6b6b, #fddb3a, #1dd1a1);
+      z-index: 0;
+      transition: all 0.4s ease;
+    }
+
+    .brand-list a:hover::before {
+      left: 0;
+    }
+
+    .brand-list a span {
+      position: relative;
+      z-index: 2;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes slideIn {
+      from {transform: translateY(-20px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+  </style>
 </head>
 <body>
-  <h1>Check Phone Warranty</h1>
-  <ul>
-    <li><a href="https://www.mi.com/in/service/repair/" target="_blank">Xiaomi</a></li>
-    <li><a href="https://support.oppo.com/in/warranty-check/" target="_blank">Oppo</a></li>
-    <li><a href="https://www.realme.com/in/support/phonecheck" target="_blank">Realme</a></li>
-    <li><a href="https://www.vivo.com/in/support/IMEI" target="_blank">Vivo</a></li>
-    <li><a href="https://www.samsung.com/in/support/your-service/main/" target="_blank">Samsung</a></li>
-    <li><a href="https://www.motorola.in/check-warranty" target="_blank">Motorola</a></li>
-    <li><a href="https://www.oneplus.in/support/repair" target="_blank">OnePlus</a></li>
-    <li><a href="https://support.apple.com/en-in/warranty" target="_blank">Apple</a></li>
-  </ul>
+  <div class="container">
+    <h1>📱 Warranty Check</h1>
+    <div class="brand-list">
+      <a href="https://www.mi.com/in/service/repair/" target="_blank"><span>Xiaomi (Mi / Redmi)</span></a>
+      <a href="https://support.oppo.com/in/warranty-check/" target="_blank"><span>Oppo</span></a>
+      <a href="https://www.realme.com/in/support/phonecheck" target="_blank"><span>Realme</span></a>
+      <a href="https://www.vivo.com/in/support/IMEI" target="_blank"><span>Vivo</span></a>
+      <a href="https://www.samsung.com/in/support/your-service/main/" target="_blank"><span>Samsung</span></a>
+      <a href="https://www.motorola.in/check-warranty" target="_blank"><span>Motorola</span></a>
+      <a href="https://www.oneplus.in/support/repair" target="_blank"><span>OnePlus</span></a>
+      <a href="https://support.apple.com/en-in/warranty" target="_blank"><span>Apple</span></a>
+    </div>
+    <footer>Made with ❤️ by Swastik Mobile</footer>
+  </div>
 </body>
 </html>
