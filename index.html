@@ -12,109 +12,135 @@
     }
 
     body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
       padding: 20px;
     }
 
-    .container {
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #00ffe5;
+      text-shadow: 0 0 10px #00ffe5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .card {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      border-radius: 20px;
-      padding: 30px 20px;
-      width: 100%;
-      max-width: 420px;
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
       text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 25px;
-      color: #ffb347;
-      animation: slideIn 0.8s ease;
-    }
-
-    .brand-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .brand-list a {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 500;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
+      padding: 20px 10px;
+      transition: 0.3s;
+      cursor: pointer;
       position: relative;
       overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,255,255,0.2), transparent 70%);
+      animation: pulse 5s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes pulse {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      border: 1px solid #00ffe5;
+      box-shadow: 0 0 15px #00ffe5;
+    }
+
+    .card img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      position: relative;
       z-index: 1;
     }
 
-    .brand-list a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(120deg, #ff6b6b, #fddb3a, #1dd1a1);
-      z-index: 0;
-      transition: all 0.4s ease;
-    }
-
-    .brand-list a:hover::before {
-      left: 0;
-    }
-
-    .brand-list a span {
+    .card span {
+      font-size: 16px;
+      font-weight: 500;
       position: relative;
-      z-index: 2;
+      z-index: 1;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     footer {
-      margin-top: 30px;
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    @keyframes slideIn {
-      from {transform: translateY(-20px); opacity: 0;}
-      to {transform: translateY(0); opacity: 1;}
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📱 Warranty Check</h1>
-    <div class="brand-list">
-      <a href="https://www.mi.com/in/service/repair/" target="_blank"><span>Xiaomi (Mi / Redmi)</span></a>
-      <a href="https://support.oppo.com/in/warranty-check/" target="_blank"><span>Oppo</span></a>
-      <a href="https://www.realme.com/in/support/phonecheck" target="_blank"><span>Realme</span></a>
-      <a href="https://www.vivo.com/in/support/IMEI" target="_blank"><span>Vivo</span></a>
-      <a href="https://www.samsung.com/in/support/your-service/main/" target="_blank"><span>Samsung</span></a>
-      <a href="https://www.motorola.in/check-warranty" target="_blank"><span>Motorola</span></a>
-      <a href="https://www.oneplus.in/support/repair" target="_blank"><span>OnePlus</span></a>
-      <a href="https://support.apple.com/en-in/warranty" target="_blank"><span>Apple</span></a>
-    </div>
-    <footer>Made with ❤️ by Swastik Mobile</footer>
+  <h1>🔧 Warranty Check</h1>
+  <div class="grid">
+    <a href="https://support.oppo.com/in/warranty-check/" target="_blank">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Oppo_logo_2019.svg" alt="Oppo" />
+        <span>Oppo</span>
+      </div>
+    </a>
+    <a href="https://www.vivo.com/in/support/IMEI" target="_blank">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Vivo_logo_2019.svg" alt="Vivo" />
+        <span>Vivo</span>
+      </div>
+    </a>
+    <a href="https://www.realme.com/in/support/phonecheck" target="_blank">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Realme_logo.png" alt="Realme" />
+        <span>Realme</span>
+      </div>
+    </a>
+    <a href="https://www.oneplus.in/support/repair" target="_blank">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/OnePlus_logo.svg" alt="OnePlus" />
+        <span>OnePlus</span>
+      </div>
+    </a>
+    <a href="https://www.motorola.in/check-warranty" target="_blank">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Motorola_new_logo.svg" alt="Motorola" />
+        <span>Motorola</span>
+      </div>
+    </a>
+    <a href="https://support.apple.com/en-in/warranty" target="_blank">
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" />
+        <span>Apple</span>
+      </div>
+    </a>
   </div>
+
+  <footer>Made with ❤️ by Swastik Mobile</footer>
 </body>
 </html>
