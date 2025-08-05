@@ -40,12 +40,16 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       border-radius: 16px;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       padding: 20px 10px;
       transition: 0.3s;
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      height: 160px;
     }
 
     .card::before {
@@ -55,7 +59,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(0,255,255,0.2), transparent 70%);
+      background: radial-gradient(circle, rgba(0,255,255,0.1), transparent 70%);
       animation: pulse 5s linear infinite;
       z-index: 0;
     }
@@ -75,15 +79,13 @@
       width: 60px;
       height: 60px;
       object-fit: contain;
-      margin-bottom: 10px;
-      position: relative;
       z-index: 1;
     }
 
-    .card span {
+    .card-name {
+      margin-top: 15px;
       font-size: 16px;
-      font-weight: 500;
-      position: relative;
+      font-weight: 600;
       z-index: 1;
     }
 
@@ -101,42 +103,42 @@
   </style>
 </head>
 <body>
-  <h1>🔧 Warranty Check</h1>
+  <h1>📱 Warranty Check</h1>
   <div class="grid">
     <a href="https://support.oppo.com/in/warranty-check/" target="_blank">
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Oppo_logo_2019.svg" alt="Oppo" />
-        <span>Oppo</span>
+        <img src="https://1000logos.net/wp-content/uploads/2023/02/Oppo-Logo.png" alt="Oppo" />
+        <div class="card-name">Oppo</div>
       </div>
     </a>
     <a href="https://www.vivo.com/in/support/IMEI" target="_blank">
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Vivo_logo_2019.svg" alt="Vivo" />
-        <span>Vivo</span>
+        <img src="https://1000logos.net/wp-content/uploads/2021/05/Vivo-logo.png" alt="Vivo" />
+        <div class="card-name">Vivo</div>
       </div>
     </a>
     <a href="https://www.realme.com/in/support/phonecheck" target="_blank">
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Realme_logo.png" alt="Realme" />
-        <span>Realme</span>
+        <img src="https://1000logos.net/wp-content/uploads/2020/09/Realme-logo.png" alt="Realme" />
+        <div class="card-name">Realme</div>
       </div>
     </a>
     <a href="https://www.oneplus.in/support/repair" target="_blank">
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/OnePlus_logo.svg" alt="OnePlus" />
-        <span>OnePlus</span>
+        <img src="https://1000logos.net/wp-content/uploads/2020/01/OnePlus-Logo.png" alt="OnePlus" />
+        <div class="card-name">OnePlus</div>
       </div>
     </a>
     <a href="https://www.motorola.in/check-warranty" target="_blank">
       <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Motorola_new_logo.svg" alt="Motorola" />
-        <span>Motorola</span>
+        <img src="https://1000logos.net/wp-content/uploads/2017/03/Motorola-logo.png" alt="Motorola" />
+        <div class="card-name">Motorola</div>
       </div>
     </a>
     <a href="https://support.apple.com/en-in/warranty" target="_blank">
       <div class="card">
         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" />
-        <span>Apple</span>
+        <div class="card-name">Apple</div>
       </div>
     </a>
   </div>
