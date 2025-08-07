@@ -98,13 +98,25 @@
 <body>
   <div class="contact-container">
     <h2>📞 Contact Us</h2>
-    <form action="#" method="post">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <form onsubmit="sendWhatsApp(); return false;">
+  <input type="text" id="name" placeholder="Your Name" required />
+  <input type="email" id="email" placeholder="Your Email" required />
+  <textarea id="message" placeholder="Your Message" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
 
+<script>
+  function sendWhatsApp() {
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let msg = document.getElementById('message').value;
+
+    let fullMsg = `Name: ${name}%0AEmail: ${email}%0AMessage: ${msg}`;
+    let phone = "7045454527"; // <== Yahan apna WhatsApp number daal
+
+    window.open(`https://wa.me/${phone}?text=${fullMsg}`, '_blank');
+  }
+</script>
     <div class="contact-info">
       <p><b>Address:</b><br>
       Swastik Mobile, Shop 1 & 2 Next to DNS Bank station road Badlapur East </p>
