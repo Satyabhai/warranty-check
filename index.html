@@ -4,172 +4,148 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Warranty Check - Swastik Mobile</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'SF Pro Display', 'Poppins', sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      min-height: 100vh;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 30px;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-    }
-
-    .navbar h1 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #000;
-    }
-
-    .navbar a {
-      background-color: #007aff;
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background 0.3s ease;
-    }
-
-    .navbar a:hover {
-      background-color: #005edb;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 25px 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: all 0.3s ease;
-      height: 180px;
-      cursor: pointer;
-      border: 1px solid #eee;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .card img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      margin-bottom: 15px;
-    }
-
-    .card-name {
-      font-size: 16px;
-      font-weight: 600;
-      color: #000;
-    }
-
-    footer {
-      text-align: center;
-      margin: 50px 0 20px;
-      font-size: 13px;
-      color: #aaa;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'SF Pro Display', 'Poppins', sans-serif; background: #f9f9f9; color: #333; min-height: 100vh; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 30px; background: #fff; border-bottom: 1px solid #eee; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04); position: relative; }
+    .navbar h1 { font-size: 20px; font-weight: 600; color: #000; }
+    .navbar .counter { font-size: 14px; color: #555; position: absolute; right: 140px; top: 50%; transform: translateY(-50%); }
+    .navbar a { background-color: #007aff; color: #fff; padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: 500; transition: background 0.3s ease; }
+    .navbar a:hover { background-color: #005edb; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; }
+    .card { background: #fff; border-radius: 20px; padding: 25px 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.3s ease; height: 190px; cursor: pointer; border: 1px solid #eee; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+    .card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 15px; }
+    .card-name { font-size: 16px; font-weight: 600; color: #000; }
+    .click-count { font-size: 13px; margin-top: 8px; color: #777; }
+    footer { text-align: center; margin: 50px 0 20px; font-size: 13px; color: #aaa; }
     @media (max-width: 500px) {
-      .navbar {
-        flex-direction: column;
-        gap: 12px;
-      }
+      .navbar { flex-direction: column; gap: 12px; }
+      .navbar .counter { position: static; transform: none; }
     }
   </style>
 </head>
 <body>
-
   <div class="navbar">
     <h1>📱 Warranty Check</h1>
+    <div class="counter">👁️ Visitors: <span id="visitorCount">0</span></div>
     <a href="contact.html">Contact Us</a>
   </div>
-
   <div class="container">
     <div class="grid">
-      <a href="https://support.oppo.com/in/warranty-check/" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oppo.png" alt="Oppo" />
-          <div class="card-name">Oppo</div>
-        </div>
-      </a>
-      <a href="https://www.vivo.com/in/support/IMEI" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/vivo.png" alt="Vivo" />
-          <div class="card-name">Vivo</div>
-        </div>
-      </a>
-      <a href="https://www.realme.com/in/support/phonecheck" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/realme.png" alt="Realme" />
-          <div class="card-name">Realme</div>
-        </div>
-      </a>
-      <a href="https://service.oneplus.com/in/check" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oneplus.png" alt="OnePlus" />
-          <div class="card-name">OnePlus</div>
-        </div>
-      </a>
-      <a href="https://en-us.support.motorola.com/app/warranty/check" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/moto.png" alt="Motorola" />
-          <div class="card-name">Motorola</div>
-        </div>
-      </a>
-      <a href="https://www.carlcare.in/in/warranty-check/" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/infinix.png" alt="INFINIX" />
-          <div class="card-name">INFINIX</div>
-        </div>
-      </a>
-      <a href="https://www.iqoo.com/in/support/IMEI" target="_blank">
-        <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/iqoo.png" alt="IQOO" />
-          <div class="card-name">IQOO</div>
-        </div>
-      </a>
-      <a href="https://checkcoverage.apple.com/?locale=en_IN" target="_blank">
-        <div class="card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" />
-          <div class="card-name">Apple</div>
-        </div>
-      </a>
+      <div onclick="trackClick('oppo')">
+        <a href="https://support.oppo.com/in/warranty-check/" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oppo.png" alt="Oppo" />
+            <div class="card-name">Oppo</div>
+            <div class="click-count" id="count-oppo">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('vivo')">
+        <a href="https://www.vivo.com/in/support/IMEI" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/vivo.png" alt="Vivo" />
+            <div class="card-name">Vivo</div>
+            <div class="click-count" id="count-vivo">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('realme')">
+        <a href="https://www.realme.com/in/support/phonecheck" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/realme.png" alt="Realme" />
+            <div class="card-name">Realme</div>
+            <div class="click-count" id="count-realme">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('oneplus')">
+        <a href="https://service.oneplus.com/in/check" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oneplus.png" alt="OnePlus" />
+            <div class="card-name">OnePlus</div>
+            <div class="click-count" id="count-oneplus">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('motorola')">
+        <a href="https://en-us.support.motorola.com/app/warranty/check" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/moto.png" alt="Motorola" />
+            <div class="card-name">Motorola</div>
+            <div class="click-count" id="count-motorola">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('infinix')">
+        <a href="https://www.carlcare.in/in/warranty-check/" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/infinix.png" alt="INFINIX" />
+            <div class="card-name">INFINIX</div>
+            <div class="click-count" id="count-infinix">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('iqoo')">
+        <a href="https://www.iqoo.com/in/support/IMEI" target="_blank">
+          <div class="card">
+            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/iqoo.png" alt="IQOO" />
+            <div class="card-name">IQOO</div>
+            <div class="click-count" id="count-iqoo">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
+      <div onclick="trackClick('apple')">
+        <a href="https://checkcoverage.apple.com/?locale=en_IN" target="_blank">
+          <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" />
+            <div class="card-name">Apple</div>
+            <div class="click-count" id="count-apple">0 warranty checks</div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
-
   <footer>
     Made with ❤️ by Swastik Mobile
   </footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDV4v2YxTGQ1GBWsSqWDIqnVrY9rGUC1To",
+      authDomain: "swastikwarranty.firebaseapp.com",
+      databaseURL: "https://swastikwarranty-default-rtdb.firebaseio.com",
+      projectId: "swastikwarranty",
+      storageBucket: "swastikwarranty.firebasestorage.app",
+      messagingSenderId: "756440563866",
+      appId: "1:756440563866:web:1ca3c355fc91ed6c64df23"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const visitorRef = db.ref("visits");
+    visitorRef.transaction((current) => (current || 0) + 1);
+    visitorRef.on("value", (snap) => {
+      document.getElementById("visitorCount").innerText = snap.val();
+    });
+
+    const brands = ["oppo", "vivo", "realme", "oneplus", "motorola", "infinix", "iqoo", "apple"];
+
+    brands.forEach((brand) => {
+      db.ref("clicks/" + brand).on("value", (snap) => {
+        document.getElementById("count-" + brand).innerText = snap.val() + " warranty checks";
+      });
+    });
+
+    function trackClick(brand) {
+      const ref = db.ref("clicks/" + brand);
+      ref.transaction((current) => (current || 0) + 1);
+    }
+  </script>
 </body>
 </html>
