@@ -2,133 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us - Swastik Mobile</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'SF Pro Display', 'Poppins', sans-serif;
+      background: #f9f9f9;
+      color: #333;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
+      padding: 30px 15px;
     }
 
-    .contact-container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .container {
+      background: #fff;
       border-radius: 20px;
-      padding: 30px 25px;
-      max-width: 400px;
+      padding: 40px 30px;
+      max-width: 420px;
       width: 100%;
-      box-shadow: 0 0 20px rgba(0,255,255,0.2);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 25px;
-      color: #00ffe5;
+      margin-bottom: 30px;
+      color: #000;
       font-size: 24px;
-      text-shadow: 0 0 10px #00ffe5;
+      font-weight: 600;
     }
 
     input, textarea {
       width: 100%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: none;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: 1px solid #ddd;
       border-radius: 10px;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 14px;
+      background: #f0f0f5;
+      font-size: 15px;
+      color: #333;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #007aff;
       outline: none;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #ccc;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
+      background: #fff;
     }
 
     button {
       width: 100%;
-      background: #00ffe5;
-      color: #000;
-      border: none;
-      padding: 12px;
+      background: #007aff;
+      color: #fff;
+      padding: 14px;
       font-size: 16px;
-      border-radius: 10px;
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
-      transition: 0.3s ease;
-      font-weight: bold;
+      transition: background 0.3s ease;
     }
 
     button:hover {
-      background: #00e0cc;
+      background: #005edb;
     }
 
-    .contact-info {
+    .info {
       margin-top: 25px;
       font-size: 14px;
       line-height: 1.6;
-      color: #ccc;
+      color: #555;
     }
 
-    .contact-info b {
-      color: #00ffe5;
+    .info b {
+      color: #000;
     }
 
     footer {
-      margin-top: 20px;
+      text-align: center;
+      margin-top: 30px;
       font-size: 12px;
       color: #aaa;
-      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="contact-container">
-    <h2>📞 Contact Us</h2>
-    <form onsubmit="sendWhatsApp(); return false;">
-  <input type="text" id="name" placeholder="Your Name" required />
-  <input type="email" id="email" placeholder="Your Email" required />
-  <textarea id="message" placeholder="Your Message" required></textarea>
-  <button type="submit">Send Message</button>
-</form>
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form action="#" method="post">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
 
-<script>
-  function sendWhatsApp() {
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let msg = document.getElementById('message').value;
-
-    let fullMsg = `Name: ${name}%0AEmail: ${email}%0AMessage: ${msg}`;
-    let phone = "8805454527"; // <== Yahan apna WhatsApp number daal
-
-    window.open(`https://wa.me/${phone}?text=${fullMsg}`, '_blank');
-  }
-</script>
-    <div class="contact-info">
-      <p><b>Address:</b><br>
-      Swastik Mobile, Shop 1 & 2 Next to DNS Bank station road Badlapur East </p>
-
-      <p><b>Phone:</b><br>
-      +91 8805454527</p>
-
-      <p><b>Email:</b><br>
-      swastikmobile17@gmail.com</p>
+    <div class="info">
+      <p><b>Address:</b><br>Gala No. 6, Station Road, Ambernath West, Maharashtra - 421501</p>
+      <p><b>Phone:</b><br>+91 9876543210</p>
+      <p><b>Email:</b><br>contact@swastikmobile.com</p>
     </div>
 
-    <footer>Swastik Mobile</footer>
+    <footer>
+      Swastik Mobile &copy; 2025
+    </footer>
   </div>
 </body>
 </html>
