@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swastik Mobile — Home</title>
+  <meta name="description" content="Swastik Mobile — Trusted mobile service & support: warranty check, repairs, accessories, EMI guidance." />
+  <style>
+    /* ------- Base ------- */
+    :root{
+      --bg:#f9f9fb; --card:#ffffff; --text:#111; --muted:#6b7280; --brand:#007aff; --brand-dark:#005edb; --ring:#e5e7eb;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display","Segoe UI", Roboto, Arial, sans-serif;background:var(--bg);color:var(--text);}
+    a{text-decoration:none;color:inherit}
+
+    /* ------- Navbar ------- */
+    .nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--ring);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px}
+    .brand{font-weight:700;letter-spacing:.2px}
+    .nav-links{display:flex;gap:14px;align-items:center}
+    .btn{display:inline-block;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;transition:.25s}
+    .btn:hover{background:var(--brand-dark);transform:translateY(-1px)}
+    .link{color:var(--muted);font-weight:600}
+    .link:hover{color:#111}
+    .mobile-hide{display:none}
+
+    /* ------- Layout ------- */
+    .wrap{max-width:1100px;margin:0 auto;padding:22px}
+    .grid{display:grid;gap:18px}
+    @media(min-width:900px){ .grid-2{grid-template-columns:1.2fr .8fr} }
+
+    /* ------- Hero ------- */
+    .hero{margin-top:14px;display:grid;gap:24px;align-items:center}
+    .title{font-size:34px;line-height:1.15;letter-spacing:-.2px}
+    .subtitle{color:var(--muted);margin-top:10px;max-width:620px}
+    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .pill{background:#eef2ff;color:#1f2937;padding:8px 12px;border-radius:999px;font-size:12px;display:inline-flex;gap:6px;align-items:center;border:1px solid var(--ring)}
+    .hero-card{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:18px;position:relative;overflow:hidden}
+    .blob{position:absolute;inset:auto -40% -60% auto;width:420px;height:420px;background:radial-gradient( circle at 30% 30%, #c7d2fe 0%, transparent 60%);}
+    .hero-list{display:grid;gap:10px;margin-top:12px;color:#374151}
+    .hero-list li{list-style:none;display:flex;gap:10px;align-items:flex-start}
+    .check{font-weight:900;color:#10b981}
+
+    /* ------- Sections ------- */
+    .section{margin-top:28px}
+    .sec-title{font-size:22px;margin-bottom:14px}
+    .cards{display:grid;gap:14px}
+    @media(min-width:700px){ .cards{grid-template-columns:repeat(3,1fr)} }
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:16px;transition:.25s}
+    .card:hover{box-shadow:0 10px 28px rgba(0,0,0,.06);transform:translateY(-2px)}
+    .card h4{font-size:16px;margin-bottom:6px}
+    .card p{color:var(--muted);font-size:14px}
+
+    /* ------- Reviews preview ------- */
+    .review{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:16px}
+    .stars{color:#f59e0b;font-size:18px;letter-spacing:2px}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* ------- Footer ------- */
+    footer{margin:32px 0 18px;color:var(--muted);text-align:center;font-size:13px}
+
+    /* ------- Responsive nav extras ------- */
+    @media(min-width:700px){ .mobile-hide{display:inline-block} }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="brand">📱 Swastik Mobile</div>
+    <div class="nav-links">
+      <a class="link mobile-hide" href="#services">Services</a>
+      <a class="link mobile-hide" href="index.html">Warranty Check</a>
+      <a class="link mobile-hide" href="#reviews">Reviews</a>
+      <a class="btn" href="contact.html">Contact Us</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero grid grid-2">
+      <div>
+        <span class="pill">Trusted since 2015 • Ambernath West</span>
+        <h1 class="title">Mobile Service & Support, the <em>right</em> way.</h1>
+        <p class="subtitle">
+          Hum Swastik Mobile par aapko milti hai fast warranty guidance, expert repair,
+          genuine accessories aur friendly after-sales support — bina bakwaas, sirf kaam.
+        </p>
+        <div class="cta">
+          <a class="btn" href="index.html">🔧 Check Warranty</a>
+          <a class="btn" style="background:#111;color:#fff" href="contact.html">📞 Talk to Us</a>
+        </div>
+        <ul class="hero-list">
+          <li><span class="check">✔</span> All major brands: Apple, OnePlus, Oppo, Vivo, Realme, Motorola, iQOO, Infinix</li>
+          <li><span class="check">✔</span> Quick guidance: IMEI se warranty status in 1–2 clicks</li>
+          <li><span class="check">✔</span> Honest advice: repair vs replace — jo best ho wahi suggest</li>
+        </ul>
+      </div>
+      <div class="hero-card">
+        <div class="blob"></div>
+        <h3 style="font-size:18px;margin-bottom:10px">What we do</h3>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+          <div class="card">
+            <h4>Warranty Help</h4>
+            <p>Brand-wise official links & guidance</p>
+          </div>
+          <div class="card">
+            <h4>Repairs</h4>
+            <p>Screen, battery, diagnostics & more</p>
+          </div>
+          <div class="card">
+            <h4>Accessories</h4>
+            <p>Chargers, guards, cases (genuine)</p>
+          </div>
+          <div class="card">
+            <h4>EMI Guidance</h4>
+            <p>Simple explanation, zero confusion</p>
+          </div>
+        </div>
+        <a class="btn" style="margin-top:14px" href="#services">Explore Services</a>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <h3 class="sec-title">Our Services</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Warranty Check</h4>
+          <p>Official brand portals — fast & accurate. Click and check instantly.</p>
+          <div style="margin-top:10px"><a class="btn" href="index.html">Go to Warranty</a></div>
+        </div>
+        <div class="card">
+          <h4>Repair & Care</h4>
+          <p>Quick diagnosis, fair pricing. Screen/battery/port issues — all covered.</p>
+        </div>
+        <div class="card">
+          <h4>Accessories</h4>
+          <p>Quality chargers, cables, screen guards & protective cases.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS PREVIEW -->
+    <section id="reviews" class="section">
+      <h3 class="sec-title">Customers say</h3>
+      <div class="grid" style="grid-template-columns:1fr;gap:14px">
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p style="margin:6px 0">“Warranty check link bahut useful hai — 1 minute me status mil gaya. Staff polite.”</p>
+          <div class="muted">— Verified customer</div>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p style="margin:6px 0">“Battery replacement fast. Genuine guidance diya, extra cheezein bechne ki koshish nahi.”</p>
+          <div class="muted">— Local guide</div>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Swastik%20Mobile%20Ambernath" target="_blank">Read Google Reviews</a>
+      </div>
+    </section>
+
+    <!-- CONTACT STRIP -->
+    <section class="section" style="background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:18px">
+      <div class="grid" style="align-items:center;gap:10px">
+        <div>
+          <h3 class="sec-title" style="margin:0">Visit or Call</h3>
+          <p class="muted">Gala No. 6, Station Road, Ambernath West — 421501</p>
+          <p class="muted">Mon–Sun • 11:00 AM – 9:00 PM</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="tel:+919876543210">📞 Call Now</a>
+          <a class="btn" style="background:#25D366" href="https://wa.me/919876543210" target="_blank">💬 WhatsApp</a>
+          <a class="btn" href="contact.html">✉️ Contact Form</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© Swastik Mobile — All rights reserved</footer>
+</body>
+</html>
