@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Panel - Swastik Mobile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel – Spin and Win</title>
   <style>
     body { font-family: Arial; background:#f4f4f9; padding:20px; }
-    .panel { max-width:400px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.2);}
-    h2 { text-align:center; color:#ff6a00; }
+    .panel { max-width:420px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,.2);}
+    h2 { text-align:center; color:#ff6a00; margin:0 0 14px; }
     .row { display:flex; justify-content:space-between; margin:10px 0; }
-    input { width:60px; text-align:center; }
-    button { margin-top:15px; width:100%; padding:10px; border:none; border-radius:8px; background:#ff6a00; color:white; font-weight:bold; cursor:pointer; }
+    input { width:70px; text-align:center; }
+    button { margin-top:15px; width:100%; padding:12px; border:none; border-radius:8px; background:#ff6a00; color:white; font-weight:bold; cursor:pointer; }
     #msg { text-align:center; margin-top:10px; }
   </style>
 </head>
 <body>
   <div class="panel">
     <h2>⚙️ Admin Panel</h2>
-    <div class="row"><label>❌ Sorry No Gift</label><input type="number" id="p0" value="50"></div>
+    <div class="row"><label>❌ No Gift</label><input type="number" id="p0" value="50"></div>
     <div class="row"><label>🎁 2 Gift</label><input type="number" id="p1" value="20"></div>
     <div class="row"><label>🎁 3 Gift</label><input type="number" id="p2" value="15"></div>
     <div class="row"><label>🎁 4 Gift</label><input type="number" id="p3" value="10"></div>
@@ -26,8 +26,25 @@
     <p id="msg"></p>
   </div>
 
-  <script>
-    async function updateConfig(){
+  <!-- Firebase Config -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSUBeeYgAw9BbtqTXn8SCAmpAwcdpje84",
+      authDomain: "swastik-spinwheel.firebaseapp.com",
+      databaseURL: "https://swastik-spinwheel-default-rtdb.firebaseio.com",
+      projectId: "swastik-spinwheel",
+      storageBucket: "swastik-spinwheel.firebasestorage.app",
+      messagingSenderId: "823485177747",
+      appId: "1:823485177747:web:89dd2b75c361ecacaf1266"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    function updateConfig(){
       const newProb=[
         parseInt(document.getElementById("p0").value)||0,
         parseInt(document.getElementById("p1").value)||0,
@@ -38,15 +55,12 @@
       const total=newProb.reduce((a,b)=>a+b,0);
       if(total!==100){
         document.getElementById("msg").innerHTML="❌ Total must be 100%. Current: "+total+"%";
-        document.getElementById("msg").style.color="red";
-        return;
+        document.getElementById("msg").style.color="red"; return;
       }
-      const config={ probabilities:newProb };
-      // ⚠️ GitHub Pages me direct JSON write possible nahi hota.
-      // Tujhe GitHub API ya Firebase/Google Sheet use karna padega.
-      console.log("New Config:",config);
-      document.getElementById("msg").innerHTML="✅ Probabilities updated (locally)";
-      document.getElementById("msg").style.color="green";
+      set(ref(db,"probabilities"), newProb).then(()=>{
+        document.getElementById("msg").innerHTML="✅ Probabilities updated!";
+        document.getElementById("msg").style.color="green";
+      });
     }
   </script>
 </body>
