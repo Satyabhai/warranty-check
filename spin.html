@@ -4,34 +4,149 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spin and Win • Swastik Mobile</title>
+
+  <!-- Premium festive fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#ff6a00,#ff9f1c); color:#fff; text-align:center; }
-    h1 { margin:20px 0; text-shadow:0 2px 8px rgba(0,0,0,.3); }
-    input { padding:12px; margin:8px; border-radius:10px; border:none; width:240px; text-align:center; }
-    .wheel-wrap { position:relative; width:340px; height:340px; margin:20px auto; }
-    canvas { width:100%; height:100%; background:#fff; border-radius:50%; box-shadow:0 12px 40px rgba(0,0,0,.35); }
-    .pointer { position:absolute; top:-22px; left:50%; transform:translateX(-50%); border-left:20px solid transparent; border-right:20px solid transparent; border-bottom:42px solid #fff; }
-    #spin { margin-top:18px; padding:14px 28px; border:none; border-radius:999px; background:#fff; color:#ff6a00; font-weight:800; cursor:pointer; }
-    #spin:disabled { background:#ddd; color:#777; cursor:not-allowed; }
-    .popup { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); align-items:center; justify-content:center; }
-    .popup .box { background:#fff; color:#222; border-radius:16px; padding:24px; text-align:center; width:min(92%,420px); }
-    .popup h2 { margin:0 0 8px; color:#ff6a00; }
-    .popup button { margin-top:12px; padding:10px 18px; border:0; border-radius:10px; background:#ff6a00; color:#fff; cursor:pointer; }
+    :root{
+      --brand:#ff6a00;
+      --brand2:#ff9f1c;
+      --ink:#0f172a;
+    }
+    /* Background */
+    body{
+      margin:0;
+      font-family:Poppins,system-ui,Arial;
+      color:#fff;
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 600px at 70% -10%,#ffffff22 0%,#00000000 60%),
+        linear-gradient(135deg,var(--brand) 0%, var(--brand2) 100%);
+      display:flex; flex-direction:column; align-items:center;
+    }
+
+    /* Header */
+    .hero{
+      margin-top:20px;
+      text-align:center;
+    }
+    .hero .line1{
+      font-family:"Baloo 2", cursive;
+      font-size:40px;
+      line-height:1;
+      text-shadow:0 4px 20px rgba(0,0,0,.25);
+      display:flex; gap:10px; align-items:center; justify-content:center;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      background:#fff; color:var(--brand);
+      border-radius:999px; padding:6px 14px; font-weight:800; margin-top:8px;
+      box-shadow:0 8px 26px rgba(0,0,0,.25);
+    }
+
+    /* Inputs */
+    .form{
+      margin:14px 0 6px;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    .form input{
+      width:260px; padding:12px 14px; margin:7px 0;
+      border-radius:12px; border:0; outline:none;
+      text-align:center; font-size:15px; color:#111;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(0,0,0,.18);
+    }
+
+    /* Wheel Zone */
+    .stage{
+      position:relative; width:360px; height:360px; margin-top:8px;
+    }
+
+    /* LED ring (bulbs) */
+    .bulb{
+      position:absolute; left:50%; top:50%;
+      width:12px; height:12px; border-radius:50%;
+      background:#ffd36a; box-shadow:0 0 0 rgba(255,230,160,0.0);
+      transform-origin:-160px center; /* distance from center */
+      transition:filter .2s, box-shadow .2s, transform .2s;
+    }
+    .spinning .bulb{
+      animation:flicker 0.8s infinite;
+    }
+    @keyframes flicker{
+      0%{ box-shadow:0 0 6px 2px rgba(255,241,170,.9); }
+      50%{ box-shadow:0 0 16px 6px rgba(255,241,170,1); }
+      100%{ box-shadow:0 0 6px 2px rgba(255,241,170,.9); }
+    }
+
+    canvas{
+      width:100%; height:100%;
+      background:#fff; border-radius:50%;
+      box-shadow:0 16px 50px rgba(0,0,0,.35), inset 0 0 0 10px #fff5;
+    }
+
+    /* Pointer – points DOWN towards wheel */
+    .pointer{
+      position:absolute; top:-34px; left:50%; transform:translateX(-50%);
+      width:0; height:0;
+      border-left:22px solid transparent;
+      border-right:22px solid transparent;
+      border-bottom:46px solid #fff; /* downwards */
+      filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));
+    }
+
+    /* Spin Button */
+    #spin{
+      margin:18px 0 26px;
+      padding:14px 30px; border:0; border-radius:999px;
+      background:#fff; color:var(--brand); font-weight:800; letter-spacing:.3px;
+      cursor:pointer; box-shadow:0 10px 26px rgba(0,0,0,.25);
+      position:relative; overflow:hidden;
+    }
+    #spin:disabled{ background:#dcdcdc; color:#777; cursor:not-allowed; box-shadow:none; }
+    #spin::after{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.7) 50%,transparent 100%);
+      transform:translateX(-150%); transition:transform .6s;
+    }
+    #spin:hover:enabled::after{ transform:translateX(150%); }
+
+    /* Popup */
+    .popup{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); align-items:center; justify-content:center; }
+    .popup .box{
+      background:#fff; color:#222; border-radius:18px; padding:26px; width:min(92%,420px);
+      text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.4); animation:pop .35s ease-out;
+    }
+    .popup h2{ margin:0 0 8px; color:var(--brand); font-weight:800; }
+    .popup button{ margin-top:12px; padding:10px 18px; border:0; border-radius:10px; background:var(--brand); color:#fff; font-weight:700; cursor:pointer; }
+    @keyframes pop{ from{ transform:scale(.7); opacity:0 } to{ transform:scale(1); opacity:1 } }
+
+    /* Footer note */
+    .foot{ opacity:.9; font-size:12px; margin-bottom:14px; }
   </style>
 </head>
 <body>
-  <h1>🎡 Spin and Win – Swastik Mobile 🎁</h1>
+  <div class="hero">
+    <div class="line1">🪔 Diwali Offer • <span style="font-weight:800">Spin and Win</span> 🎁</div>
+    <div class="badge">Swastik Mobile</div>
+  </div>
 
-  <input type="text" id="name" placeholder="Enter Name" /><br />
-  <input type="text" id="phone" placeholder="Enter Mobile Number" /><br />
+  <div class="form">
+    <input id="name" type="text" placeholder="Enter Name" />
+    <input id="phone" type="text" placeholder="Enter Mobile Number" />
+  </div>
 
-  <div class="wheel-wrap">
+  <div class="stage" id="stage">
+    <!-- LED bulbs will be generated by JS -->
     <div class="pointer"></div>
-    <canvas id="wheel" width="320" height="320"></canvas>
+    <canvas id="wheel" width="340" height="340"></canvas>
   </div>
 
   <button id="spin" disabled>SPIN NOW</button>
+  <div class="foot">Good luck! ✨</div>
 
+  <!-- Result Popup -->
   <div class="popup" id="popup">
     <div class="box">
       <h2>🎉 Result</h2>
@@ -40,11 +155,12 @@
     </div>
   </div>
 
-  <!-- Firebase Config -->
+  <!-- Firebase (ESM v12) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
+    /* YOUR CONFIG (as given) */
     const firebaseConfig = {
       apiKey: "AIzaSyCSUBeeYgAw9BbtqTXn8SCAmpAwcdpje84",
       authDomain: "swastik-spinwheel.firebaseapp.com",
@@ -54,72 +170,132 @@
       messagingSenderId: "823485177747",
       appId: "1:823485177747:web:89dd2b75c361ecacaf1266"
     };
-
     const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+    const db  = getDatabase(app);
 
+    /* UI refs */
     const wheel = document.getElementById("wheel");
-    const ctx = wheel.getContext("2d");
+    const ctx   = wheel.getContext("2d");
+    const stage = document.getElementById("stage");
+    const spinBtn = document.getElementById("spin");
+
+    /* Generate LED bulbs around wheel */
+    const BULBS = 28;                     // number of LEDs
+    const RADIUS_OFFSET = 160;            // distance from center
+    for(let i=0;i<BULBS;i++){
+      const b = document.createElement("div");
+      b.className = "bulb";
+      const deg = (360 / BULBS) * i;
+      b.style.transform = `rotate(${deg}deg) translateX(${RADIUS_OFFSET}px)`;
+      stage.appendChild(b);
+    }
+
+    /* Game data */
     const prizes = ["❌ Sorry No Gift","🎁 2 Gift","🎁 3 Gift","🎁 4 Gift","🎁 5 Gift"];
     const colors = ["#ef4444","#facc15","#22c55e","#3b82f6","#a855f7"];
-    let probabilities=[50,20,15,10,5];
-    let startAngle=0; let usedNumbers=[];
+    let probabilities = [50,20,15,10,5];
+    let startAngle = 0;
+    const usedNumbers = new Set();
 
-    // Firebase listener
-    onValue(ref(db,"probabilities"), (snap)=>{
-      if(snap.exists()){ probabilities=snap.val(); console.log("Updated probabilities:",probabilities); }
-    });
-
-    function drawWheel(){
-      const arc=Math.PI*2/prizes.length;
-      for(let i=0;i<prizes.length;i++){
-        const angle=startAngle+i*arc;
-        ctx.fillStyle=colors[i]; ctx.beginPath();
-        ctx.moveTo(160,160); ctx.arc(160,160,160,angle,angle+arc); ctx.closePath(); ctx.fill();
-        ctx.save(); ctx.translate(160,160); ctx.rotate(angle+arc/2);
-        ctx.fillStyle="white"; ctx.font="bold 14px Arial"; ctx.fillText(prizes[i],60,10); ctx.restore();
+    /* Read live probabilities */
+    onValue(ref(db, "probabilities"), snap=>{
+      if(snap.exists()){
+        probabilities = snap.val();
+        console.log("Probabilities:", probabilities);
       }
-    } drawWheel();
-
-    document.getElementById("phone").addEventListener("input",()=>{
-      document.getElementById("spin").disabled=!(name.value.trim() && phone.value.trim());
     });
 
-    function getWeightedPrize(){
-      let total=probabilities.reduce((a,b)=>a+b,0);
-      let rand=Math.random()*total, cumulative=0;
-      for(let i=0;i<prizes.length;i++){ cumulative+=probabilities[i]; if(rand<cumulative) return i; }
+    /* Draw wheel function */
+    function drawWheel(){
+      const arc = Math.PI*2 / prizes.length;
+      for(let i=0;i<prizes.length;i++){
+        const angle = startAngle + i*arc;
+        ctx.fillStyle = colors[i];
+        ctx.beginPath();
+        ctx.moveTo(170,170);
+        ctx.arc(170,170,170, angle, angle+arc);
+        ctx.closePath(); ctx.fill();
+
+        // labels
+        ctx.save();
+        ctx.translate(170,170);
+        ctx.rotate(angle + arc/2);
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 16px Poppins, Arial";
+        ctx.textAlign = "left";
+        ctx.fillText(prizes[i], 72, 6);
+        ctx.restore();
+      }
+      // glossy inner hub
+      ctx.beginPath();
+      ctx.arc(170,170,32,0,Math.PI*2);
+      ctx.fillStyle="#ffffff";
+      ctx.fill();
+      ctx.strokeStyle="#ffd8b3";
+      ctx.lineWidth=6; ctx.stroke();
+    }
+    drawWheel();
+
+    /* Enable button when filled */
+    const nameIn = document.getElementById("name");
+    const phoneIn= document.getElementById("phone");
+    function checkForm(){
+      spinBtn.disabled = !(nameIn.value.trim() && phoneIn.value.trim());
+    }
+    nameIn.addEventListener("input",checkForm);
+    phoneIn.addEventListener("input",checkForm);
+
+    /* Weighted pick */
+    function pickIndex(){
+      const total = probabilities.reduce((a,b)=>a+b,0);
+      let r = Math.random()*total, c=0;
+      for(let i=0;i<prizes.length;i++){ c+=probabilities[i]; if(r<c) return i; }
       return 0;
     }
 
-    document.getElementById("spin").addEventListener("click",()=>{
-      const name=document.getElementById("name").value.trim();
-      const phone=document.getElementById("phone").value.trim();
-      if(usedNumbers.includes(phone)){ alert("⚠️ Already played!"); return;}
-      usedNumbers.push(phone);
+    /* Spin */
+    spinBtn.addEventListener("click", ()=>{
+      const name  = nameIn.value.trim();
+      const phone = phoneIn.value.trim();
+      if(usedNumbers.has(phone)){ alert("⚠️ This number has already played!"); return; }
+      usedNumbers.add(phone);
 
-      const chosenIndex=getWeightedPrize();
-      const arc=(2*Math.PI)/prizes.length;
-      const chosenAngle=(prizes.length-chosenIndex)*arc-arc/2;
-      const spinAngle=1800+(chosenAngle*180/Math.PI);
-      const duration=3000,start=performance.now();
+      const idx = pickIndex();
+      const arc = (2*Math.PI)/prizes.length;
+      const stopAt = (prizes.length - idx) * arc - arc/2; // aligns with pointer at 12 o'clock
 
-      function animate(now){
-        const elapsed=now-start;
-        if(elapsed<duration){
-          const progress=elapsed/duration, angle=spinAngle*progress;
-          startAngle=angle*Math.PI/180; ctx.clearRect(0,0,320,320); drawWheel();
+      const baseTurns = 6;                     // full rotations
+      const finalDeg  = baseTurns*360 + (stopAt*180/Math.PI);
+      const dur = 3200;
+      const start = performance.now();
+
+      // turn on bulbs
+      stage.classList.add("spinning");
+
+      (function animate(now){
+        const t = now - start;
+        if(t < dur){
+          const k = t/dur;
+          // ease-out cubic
+          const eased = 1 - Math.pow(1-k, 3);
+          const angleDeg = finalDeg * eased;
+          startAngle = angleDeg * Math.PI/180;
+          ctx.clearRect(0,0,340,340);
+          drawWheel();
           requestAnimationFrame(animate);
-        } else { showPopup(name,phone,prizes[chosenIndex]); }
-      }
-      requestAnimationFrame(animate);
+        } else {
+          stage.classList.remove("spinning"); // lights steady
+          showPopup(name, phone, prizes[idx]);
+        }
+      })(start);
     });
 
-    function showPopup(name,phone,prize){
-      document.getElementById("prize").textContent=`${name} (${phone}), you got: ${prize}`;
-      document.getElementById("popup").style.display="flex";
+    /* Popup */
+    function showPopup(name, phone, prize){
+      document.getElementById("prize").textContent = `${name} (${phone}), you got: ${prize}`;
+      document.getElementById("popup").style.display = "flex";
     }
-    function closePopup(){ document.getElementById("popup").style.display="none"; }
+    window.closePopup = () => document.getElementById("popup").style.display="none";
   </script>
 </body>
 </html>
