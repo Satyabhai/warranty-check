@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spin and Win • Swastik Mobile</title>
 
+  <!-- Festive fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{ --brand:#ff6a00; --brand2:#ff9f1c; }
     body{
@@ -13,37 +15,49 @@
       min-height:100vh; background:linear-gradient(135deg,var(--brand),var(--brand2));
       display:flex; flex-direction:column; align-items:center;
     }
-    .hero{ margin:18px 0 6px; text-align:center }
+    .hero{ margin:18px 0 0; text-align:center }
     .hero .title{ font-family:"Baloo 2"; font-size:38px; text-shadow:0 4px 18px rgba(0,0,0,.25) }
     .badge{
-      display:inline-block; margin-top:6px; padding:6px 14px; border-radius:999px;
+      display:inline-block; margin:8px 0 0; padding:6px 14px; border-radius:999px;
       background:#fff; color:var(--brand); font-weight:800; box-shadow:0 8px 26px rgba(0,0,0,.25)
     }
 
-    .stage{ position:relative; width:360px; height:360px; margin-top:8px; }
+    /* Wheel area */
+    .stage{
+      position:relative;
+      width:360px; height:360px;
+      margin-top:32px;            /* wheel ko thoda niche laya */
+    }
     canvas{
       width:100%; height:100%; background:#fff; border-radius:50%;
       box-shadow:0 16px 50px rgba(0,0,0,.35), inset 0 0 0 10px #ffffff55;
     }
-    /* pointer (top, pointing down to wheel) */
+
+    /* Pointer at bottom, tip UP towards wheel */
     .pointer{
-      position:absolute; top:-34px; left:50%; transform:translateX(-50%);
+      position:absolute;
+      bottom:-34px; left:50%; transform:translateX(-50%);
       width:0; height:0;
-      border-left:22px solid transparent; border-right:22px solid transparent;
-      border-bottom:46px solid #fff; filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));
+      border-left:22px solid transparent;
+      border-right:22px solid transparent;
+      border-top:46px solid #fff;   /* triangle tip UP (towards wheel) */
+      filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));
     }
 
-    /* LED bulbs on rim */
+    /* LED bulbs exactly around the rim */
     .bulb{
       position:absolute; left:50%; top:50%;
       width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
       background:#ffd36a; box-shadow:0 0 8px 2px rgba(255,241,170,.9);
     }
     .spinning .bulb{ animation:flicker .8s infinite }
-    @keyframes flicker{ 0%{box-shadow:0 0 6px 2px rgba(255,241,170,.8)}
-      50%{box-shadow:0 0 16px 6px rgba(255,241,170,1)}
-      100%{box-shadow:0 0 6px 2px rgba(255,241,170,.8)} }
+    @keyframes flicker{
+      0%{ box-shadow:0 0 6px 2px rgba(255,241,170,.8) }
+      50%{ box-shadow:0 0 16px 6px rgba(255,241,170,1) }
+      100%{ box-shadow:0 0 6px 2px rgba(255,241,170,.8) }
+    }
 
+    /* Spin button */
     #spin{
       margin:18px 0 26px; padding:14px 30px; border:0; border-radius:999px;
       background:#fff; color:var(--brand); font-weight:800; letter-spacing:.3px;
@@ -56,6 +70,7 @@
     }
     #spin:hover::after{ transform:translateX(150%) }
 
+    /* Result popup */
     .popup{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); align-items:center; justify-content:center }
     .popup .box{
       background:#fff; color:#222; border-radius:18px; padding:26px; width:min(92%,420px);
@@ -73,8 +88,8 @@
   </div>
 
   <div class="stage" id="stage">
-    <div class="pointer"></div>
     <canvas id="wheel" width="340" height="340"></canvas>
+    <div class="pointer"></div>
   </div>
 
   <button id="spin">SPIN NOW</button>
@@ -87,12 +102,12 @@
     </div>
   </div>
 
-  <!-- Firebase (ESM v12) -->
+  <!-- Firebase (ES Modules v12) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
-    // Your config (as you shared)
+    /* your Firebase config */
     const firebaseConfig = {
       apiKey: "AIzaSyCSUBeeYgAw9BbtqTXn8SCAmpAwcdpje84",
       authDomain: "swastik-spinwheel.firebaseapp.com",
@@ -105,31 +120,32 @@
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
 
-    // UI refs
+    /* UI refs */
     const wheel = document.getElementById("wheel");
     const ctx   = wheel.getContext("2d");
     const stage = document.getElementById("stage");
     const spinBtn = document.getElementById("spin");
 
-    // LEDs around rim
-    const BULBS = 28, R = 170; // radius
+    /* LEDs around rim */
+    const BULBS = 28, R = 170; // drawing radius
     for(let i=0;i<BULBS;i++){
       const b = document.createElement("div");
       b.className="bulb";
       const a = (i/BULBS)*Math.PI*2;
-      const x = 170 + (R-6)*Math.cos(a); // -6 to sit just outside arc
+      const x = 170 + (R-6)*Math.cos(a);
       const y = 170 + (R-6)*Math.sin(a);
       b.style.left = `calc(50% + ${(x-170)}px)`;
       b.style.top  = `calc(50% + ${(y-170)}px)`;
       stage.appendChild(b);
     }
 
-    // Game data
+    /* Game data */
     const prizes = ["❌ Sorry No Gift","🎁 2 Gift","🎁 3 Gift","🎁 4 Gift","🎁 5 Gift"];
     const colors = ["#ef4444","#facc15","#22c55e","#3b82f6","#a855f7"];
-    let probabilities=[50,20,15,10,5];   // default; live update from Firebase
-    let startAngle = 0;
+    let probabilities=[50,20,15,10,5];          // default; will update from Firebase
+    let startAngle = 0;                           // radians
 
+    // Read live probabilities
     onValue(ref(db,"probabilities"), snap=>{
       if(snap.exists()) probabilities = snap.val();
     });
@@ -159,20 +175,23 @@
       return 0;
     }
 
-    // Ultra-smooth rAF animation (syncs to display refresh; great on 120Hz)
+    // Smooth spin (rAF, 120 Hz friendly)
     function spin(){
       const idx = pickIndex();
       const arc = (2*Math.PI)/prizes.length;
-      // we want chosen slice center at 12 o'clock (i.e., -π/2), while we draw from startAngle
-      const targetAngle = (-Math.PI/2) - (idx*arc) - arc/2; // center of slice at top
-      const currentTurns = 6; // full spins before stopping
-      const final = startAngle + currentTurns*2*Math.PI + (targetAngle - (startAngle % (2*Math.PI)));
 
-      const dur = 3200;                 // ms (enough time but still snappy)
-      const t0 = performance.now();
+      /* POINTER AT BOTTOM:
+         bottom pointer means winning slice center should land at 6 o'clock ( +π/2 )
+      */
+      const targetAngle = (Math.PI/2) - (idx*arc) - arc/2;
+
+      const fullTurns = 6; // complete rotations before stopping
+      const final = startAngle + fullTurns*2*Math.PI + (targetAngle - (startAngle % (2*Math.PI)));
+
+      const dur = 3200; const t0 = performance.now();
       stage.classList.add("spinning");
 
-      function easeOutCubic(t){ return 1 - Math.pow(1-t,3); }
+      const easeOutCubic = t => 1 - Math.pow(1-t,3);
 
       function frame(now){
         const t = Math.min(1, (now - t0)/dur);
@@ -184,8 +203,7 @@
         if(t < 1) requestAnimationFrame(frame);
         else{
           stage.classList.remove("spinning");
-          const result = prizes[idx];
-          document.getElementById("prize").textContent = result;
+          document.getElementById("prize").textContent = prizes[idx];
           document.getElementById("popup").style.display = "flex";
         }
       }
