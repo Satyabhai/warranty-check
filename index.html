@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Warranty Check - Swastik Mobile</title>
 
-  <!-- Firebase (compat build for simplicity) -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
@@ -39,83 +39,67 @@
   <div class="container">
     <div class="grid">
       <div onclick="trackClick('oppo')">
-        <a href="https://support.oppo.com/in/warranty-check/" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oppo.png" alt="Oppo">
-            <div class="card-name">Oppo</div>
-            <div class="click-count" id="count-oppo">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oppo.png" alt="Oppo">
+          <div class="card-name">Oppo</div>
+          <div class="click-count" id="count-oppo">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('vivo')">
-        <a href="https://www.vivo.com/in/support/IMEI" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/vivo.png" alt="Vivo">
-            <div class="card-name">Vivo</div>
-            <div class="click-count" id="count-vivo">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/vivo.png" alt="Vivo">
+          <div class="card-name">Vivo</div>
+          <div class="click-count" id="count-vivo">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('realme')">
-        <a href="https://www.realme.com/in/support/phonecheck" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/realme.png" alt="Realme">
-            <div class="card-name">Realme</div>
-            <div class="click-count" id="count-realme">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/realme.png" alt="Realme">
+          <div class="card-name">Realme</div>
+          <div class="click-count" id="count-realme">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('oneplus')">
-        <a href="https://service.oneplus.com/in/check" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oneplus.png" alt="OnePlus">
-            <div class="card-name">OnePlus</div>
-            <div class="click-count" id="count-oneplus">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oneplus.png" alt="OnePlus">
+          <div class="card-name">OnePlus</div>
+          <div class="click-count" id="count-oneplus">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('motorola')">
-        <a href="https://en-us.support.motorola.com/app/warranty/check" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/moto.png" alt="Motorola">
-            <div class="card-name">Motorola</div>
-            <div class="click-count" id="count-motorola">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/moto.png" alt="Motorola">
+          <div class="card-name">Motorola</div>
+          <div class="click-count" id="count-motorola">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('infinix')">
-        <a href="https://www.carlcare.in/in/warranty-check/" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/infinix.png" alt="INFINIX">
-            <div class="card-name">INFINIX</div>
-            <div class="click-count" id="count-infinix">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/infinix.png" alt="Infinix">
+          <div class="card-name">Infinix</div>
+          <div class="click-count" id="count-infinix">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('iqoo')">
-        <a href="https://www.iqoo.com/in/support/IMEI" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/iqoo.png" alt="IQOO">
-            <div class="card-name">IQOO</div>
-            <div class="click-count" id="count-iqoo">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/iqoo.png" alt="IQOO">
+          <div class="card-name">IQOO</div>
+          <div class="click-count" id="count-iqoo">0 warranty checks</div>
+        </div>
       </div>
 
       <div onclick="trackClick('apple')">
-        <a href="https://checkcoverage.apple.com/?locale=en_IN" target="_blank" rel="noopener">
-          <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
-            <div class="card-name">Apple</div>
-            <div class="click-count" id="count-apple">0 warranty checks</div>
-          </div>
-        </a>
+        <div class="card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+          <div class="card-name">Apple</div>
+          <div class="click-count" id="count-apple">0 warranty checks</div>
+        </div>
       </div>
     </div>
   </div>
@@ -136,9 +120,10 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // ---------- VISITOR COUNTER (always increment) ----------
+    // ---------- VISITOR COUNTER ----------
     const visitorRef = db.ref("visits");
 
+    // continue from old value
     visitorRef.transaction(current => (current || 0) + 1);
 
     visitorRef.on("value", snap => {
@@ -146,7 +131,7 @@
       document.getElementById("visitorCount").innerText = val;
     });
 
-    // ---------- CLICK COUNTERS (8 brands) ----------
+    // ---------- CLICK COUNTERS ----------
     const brands = ["oppo","vivo","realme","oneplus","motorola","infinix","iqoo","apple"];
     brands.forEach(b=>{
       db.ref("clicks/"+b).on("value", snap=>{
@@ -156,44 +141,9 @@
       });
     });
 
-    // ---------- AREA NAME LOGGING (silent) ----------
-    function saveEvent(payload){
-      try { db.ref("events").push(payload); }
-      catch(e){ console.warn("Event save failed:", e); }
-    }
-
-    function getAreaName(lat, lon){
-      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=12&addressdetails=1`;
-      return fetch(url).then(r=>r.json()).then(d=>{
-        const a = d && d.address ? d.address : {};
-        const city = a.city || a.town || a.village || a.suburb || "";
-        const state = a.state || "";
-        return [city, state].filter(Boolean).join(", ") || "Unknown Location";
-      }).catch(()=> "Unknown Location");
-    }
-
-    function onGeoOK(brand, pos){
-      const lat = pos.coords.latitude, lon = pos.coords.longitude;
-      getAreaName(lat, lon).then(area=>{
-        saveEvent({ type:"brand_click", brand, ts:Date.now(), area });
-      });
-    }
-
-    function onGeoErr(brand){
-      saveEvent({ type:"brand_click", brand, ts:Date.now(), area:"Location Not Allowed" });
-    }
-
+    // ---------- CLICK TRACK FUNCTION ----------
     function trackClick(brand){
       db.ref("clicks/"+brand).transaction(c=>(c||0)+1);
-      if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(
-          pos => onGeoOK(brand, pos),
-          err => onGeoErr(brand),
-          { timeout:8000 }
-        );
-      } else {
-        onGeoErr(brand);
-      }
     }
   </script>
 </body>
