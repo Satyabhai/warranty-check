@@ -35,76 +35,84 @@
 
 <div class="container">
   <div class="grid">
+    <!-- Oppo -->
     <div onclick="trackClick('oppo')">
       <a href="https://support.oppo.com/in/warranty-check/" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oppo.png" alt="Oppo">
+          <img src="oppo.png" alt="Oppo">
           <div class="card-name">Oppo</div>
           <div class="click-count" id="count-oppo">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- Vivo -->
     <div onclick="trackClick('vivo')">
       <a href="https://www.vivo.com/in/support/IMEI" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/vivo.png" alt="Vivo">
+          <img src="vivo.png" alt="Vivo">
           <div class="card-name">Vivo</div>
           <div class="click-count" id="count-vivo">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- Realme -->
     <div onclick="trackClick('realme')">
       <a href="https://www.realme.com/in/support/phonecheck" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/realme.png" alt="Realme">
+          <img src="realme.png" alt="Realme">
           <div class="card-name">Realme</div>
           <div class="click-count" id="count-realme">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- OnePlus -->
     <div onclick="trackClick('oneplus')">
       <a href="https://service.oneplus.com/in/check" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/oneplus.png" alt="OnePlus">
+          <img src="oneplus.png" alt="OnePlus">
           <div class="card-name">OnePlus</div>
           <div class="click-count" id="count-oneplus">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- Motorola -->
     <div onclick="trackClick('motorola')">
       <a href="https://en-us.support.motorola.com/app/warranty/check" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/moto.png" alt="Motorola">
+          <img src="moto.png" alt="Motorola">
           <div class="card-name">Motorola</div>
           <div class="click-count" id="count-motorola">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- Infinix -->
     <div onclick="trackClick('infinix')">
       <a href="https://www.carlcare.in/in/warranty-check/" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/infinix.png" alt="Infinix">
+          <img src="infinix.png" alt="Infinix">
           <div class="card-name">Infinix</div>
           <div class="click-count" id="count-infinix">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- iQOO -->
     <div onclick="trackClick('iqoo')">
       <a href="https://www.iqoo.com/in/support/IMEI" target="_blank" rel="noopener">
         <div class="card">
-          <img src="https://raw.githubusercontent.com/Satyabhai/warranty-check/main/iqoo.png" alt="iQOO">
+          <img src="iqoo.png" alt="iQOO">
           <div class="card-name">iQOO</div>
           <div class="click-count" id="count-iqoo">0 warranty checks</div>
         </div>
       </a>
     </div>
 
+    <!-- Apple -->
     <div onclick="trackClick('apple')">
       <a href="https://checkcoverage.apple.com/?locale=en_IN" target="_blank" rel="noopener">
         <div class="card">
@@ -122,7 +130,7 @@
 </footer>
 
 <script>
-  // --- Firebase Config (tumhara config yaha paste karo) ---
+  // --- Firebase Config (tumhara config paste karo) ---
   const firebaseConfig = {
     apiKey: "AIzaSyDV4v2YxTGQ1GBWsSqWDIqnVrY9rGUC1To",
     authDomain: "swastikwarranty.firebaseapp.com",
@@ -135,7 +143,7 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // Visitors counter
+  // Visitors Counter
   const VISITOR_KEY = "sm_visitor_once_v1";
   const visitorRef = db.ref("visits");
   if (!localStorage.getItem(VISITOR_KEY)) {
@@ -143,21 +151,20 @@
     localStorage.setItem(VISITOR_KEY, "1");
   }
   visitorRef.on("value", snap => {
-    const val = snap.val() || 0;
-    document.getElementById("visitorCount").innerText = val;
+    document.getElementById("visitorCount").innerText = snap.val() || 0;
   });
 
-  // Click counters
+  // Click Counters
   const brands = ["oppo","vivo","realme","oneplus","motorola","infinix","iqoo","apple"];
-  brands.forEach(b => {
-    db.ref("clicks/"+b).on("value", snap => {
+  brands.forEach(b=>{
+    db.ref("clicks/"+b).on("value", snap=>{
       const n = snap.val() || 0;
       const el = document.getElementById("count-"+b);
       if (el) el.innerText = n + " warranty checks";
     });
   });
 
-  // Track clicks
+  // Track Clicks
   function trackClick(brand) {
     db.ref("clicks/"+brand).transaction(c => (c || 0) + 1);
   }
