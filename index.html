@@ -136,16 +136,11 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // ---------- UNIQUE VISITOR COUNTER ----------
-    const VISITOR_KEY = "sm_visitor_once_v1";
+    // ---------- VISITOR COUNTER (always increment) ----------
     const visitorRef = db.ref("visits");
 
-    // increase only once per browser/device
-    if (!localStorage.getItem(VISITOR_KEY)) {
-      visitorRef.transaction(current => (current || 0) + 1);
-      localStorage.setItem(VISITOR_KEY, "1");
-    }
-    // live show
+    visitorRef.transaction(current => (current || 0) + 1);
+
     visitorRef.on("value", snap => {
       const val = snap.val() || 0;
       document.getElementById("visitorCount").innerText = val;
@@ -162,77 +157,42 @@
     });
 
     // ---------- AREA NAME LOGGING (silent) ----------
-    const LOC_KEY = "sm_loc_saved_v1";
-
     function saveEvent(payload){
       try { db.ref("events").push(payload); }
       catch(e){ console.warn("Event save failed:", e); }
     }
 
-    // Reverse geocode (OpenStreetMap Nominatim) → "City, State"
     function getAreaName(lat, lon){
       const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=12&addressdetails=1`;
-      return fetch(url, {
-        headers: {
-          "Accept": "application/json",
-          // optional but polite:
-          "User-Agent": "SwastikMobileWarrantySite/1.0"
-        }
-      })
-      .then(r=>r.json())
-      .then(d=>{
+      return fetch(url).then(r=>r.json()).then(d=>{
         const a = d && d.address ? d.address : {};
         const city = a.city || a.town || a.village || a.suburb || "";
         const state = a.state || "";
-        const joined = [city, state].filter(Boolean).join(", ");
-        return joined || "Unknown Location";
-      })
-      .catch(()=> "Unknown Location");
+        return [city, state].filter(Boolean).join(", ") || "Unknown Location";
+      }).catch(()=> "Unknown Location");
     }
 
     function onGeoOK(brand, pos){
       const lat = pos.coords.latitude, lon = pos.coords.longitude;
       getAreaName(lat, lon).then(area=>{
-        saveEvent({
-          type: "brand_click",
-          brand,
-          ts: Date.now(),
-          area,
-          tzOffsetMin: new Date().getTimezoneOffset()*-1,
-          ua: navigator.userAgent
-        });
-        // mark so we don't ask again on this device
-        localStorage.setItem(LOC_KEY, "1");
-      }).catch(()=>{
-        saveEvent({ type:"brand_click", brand, ts: Date.now(), area:"Unknown Location" });
+        saveEvent({ type:"brand_click", brand, ts:Date.now(), area });
       });
     }
 
-    function onGeoErr(brand, err){
-      saveEvent({ type:"brand_click", brand, ts: Date.now(), area:"Location Not Allowed" });
-      // optional: prevent asking again next time on same device
-      // localStorage.setItem(LOC_KEY, "1");
+    function onGeoErr(brand){
+      saveEvent({ type:"brand_click", brand, ts:Date.now(), area:"Location Not Allowed" });
     }
 
-    // call on card click
     function trackClick(brand){
-      // 1) increment counter fast
       db.ref("clicks/"+brand).transaction(c=>(c||0)+1);
-
-      // 2) log event + area silently
-      if (localStorage.getItem(LOC_KEY)==="1"){
-        // already captured earlier; don't re-prompt
-        saveEvent({ type:"brand_click", brand, ts: Date.now(), area:"Cached Visitor" });
-        return;
-      }
       if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(
           pos => onGeoOK(brand, pos),
-          err => onGeoErr(brand, err),
-          { enableHighAccuracy:false, timeout:8000, maximumAge:600000 }
+          err => onGeoErr(brand),
+          { timeout:8000 }
         );
       } else {
-        onGeoErr(brand, {message:"geolocation_not_supported"});
+        onGeoErr(brand);
       }
     }
   </script>
